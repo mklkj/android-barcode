@@ -37,7 +37,6 @@ lint.xml
 # gradle
 .gradle/
 build/
-gradle/
 
 # etc
 .DS_Store
