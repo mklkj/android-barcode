@@ -1,6 +1,5 @@
 package com.coolbong.barcodegenerator.model;
 
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -9,11 +8,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-
-//number only
-//http://en.wikipedia.org/wiki/Code_128
+/**
+ * Code 128 is a very high-density barcode symbology.
+ * It is used for alphanumeric or numeric-only barcodes.
+ * It can encode all 128 characters of ASCII and, by use of an extension symbol (FNC4),
+ * the Latin-1 characters defined in ISO/IEC 8859-1
+ *
+ * http://en.wikipedia.org/wiki/Code_128
+ */
 public class Code128 {
-
     private static final String TAG = Code128.class.getSimpleName();
 
     // start code value

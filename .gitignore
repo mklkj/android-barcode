@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # built application files
 #*.apk
 *.ap_
@@ -47,3 +48,9 @@ version_name.txt
 crashlytics.properties
 crashlytics-build.properties
 com_crashlytics_export_strings.xml
+=======
+bin/
+gen/
+.classpath
+.project
+>>>>>>> 84fdd65b0bfaa863cc40d334e161a202a0f7928c
