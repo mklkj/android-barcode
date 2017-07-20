@@ -8,7 +8,7 @@
 To get a Git project into your build:
 ### Step 1. Add the JitPack repository to your build file
 Add it in your root build.gradle at the end of repositories:
-```
+```groovy
 allprojects {
     repositories {
         ...
@@ -18,14 +18,14 @@ allprojects {
 ```
 
 ### Step 2. Add the dependency
-```
+```groovy
 dependencies {
     compile 'com.github.ohjongin:android-barcode:1.0.1'
 }
 ```
 
 ## Usage:
-```
+```java
 private void drawBarcode() {
    String barcode = "7761010114033430";
    Code128 code = new Code128(this);
