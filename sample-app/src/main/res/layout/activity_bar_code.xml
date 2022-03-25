@@ -1,34 +1,23 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".sample.BarCodeActivity" >
+    android:orientation="vertical"
+    android:padding="24dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world" />
+    <ImageView
+        android:id="@+id/code128_barcode"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        tools:background="@tools:sample/backgrounds/scenic"
+        tools:ignore="ContentDescription" />
 
-    <!-- barcode area -->
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-        <View
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"
-            android:background="#00000000" />
-        <ImageView
-            android:id="@+id/code128_barcode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:ignore="ContentDescription" />
-        <View
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"
-            android:background="#00000000" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/ean13_barcode"
+        android:layout_width="320dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="24dp"
+        tools:background="@tools:sample/backgrounds/scenic"
+        tools:ignore="ContentDescription" />
 
-</RelativeLayout>
+</LinearLayout>

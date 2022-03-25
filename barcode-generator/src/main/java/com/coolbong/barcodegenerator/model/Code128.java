@@ -1,7 +1,5 @@
 package com.coolbong.barcodegenerator.model;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,7 +11,7 @@ import android.graphics.Rect;
  * It is used for alphanumeric or numeric-only barcodes.
  * It can encode all 128 characters of ASCII and, by use of an extension symbol (FNC4),
  * the Latin-1 characters defined in ISO/IEC 8859-1
- *
+ * <p>
  * http://en.wikipedia.org/wiki/Code_128
  */
 public class Code128 {
@@ -29,11 +27,6 @@ public class Code128 {
     private static final int DIVISOR = 103;
 
     private String data;
-    private Context context;
-
-    public Code128(Context context) {
-        this.context = context;
-    }
 
     public Code128(String data) {
         this.data = data;
@@ -119,24 +112,40 @@ public class Code128 {
     }
 
     public Bitmap getBitmap(int width, int height) {
-        return getBitmap(width, height, false);
+        return getBitmap(width, height, true);
     }
 
-    public Bitmap getBitmap(int width, int height, boolean hasText) {
+    public Bitmap getBitmap(int width, int height, boolean enableQuiteZone) {
         byte[] code = encode();
         if (code == null) {
             return null;
         }
-        int TOP_GAP = 10;
-        int BOTTOM_GAP = hasText ? 60 : 10;
-        int inputWidth = code.length;
-        // Add quiet zone on both sides
-        int fullWidth = inputWidth + (6);
-        int outputWidth = Math.max(width, fullWidth);
-        int outputHeight = Math.max(1, height) - BOTTOM_GAP;
+        int TOP_GAP = 0;
+        int BOTTOM_GAP;
+        int inputWidth;
+        int outputHeight;
+        int multiple;
+        int leftPadding = 0;
 
-        int multiple = outputWidth / fullWidth;
-        int leftPadding = (outputWidth - (inputWidth * multiple)) / 2;
+        if (enableQuiteZone) {
+            TOP_GAP = 10;
+            BOTTOM_GAP = 10;
+            inputWidth = code.length;
+            // Add quiet zone on both sides
+            int fullWidth = inputWidth + (6);
+            int outputWidth = Math.max(width, fullWidth);
+            outputHeight = Math.max(1, height) - BOTTOM_GAP;
+
+            multiple = outputWidth / fullWidth;
+            leftPadding = (outputWidth - (inputWidth * multiple)) / 2;
+        } else {
+            // todo: fix removing right padding when quiet zone is disabled
+            inputWidth = code.length;
+            int outputWidth = Math.max(width, inputWidth);
+            outputHeight = Math.max(1, height);
+
+            multiple = outputWidth / inputWidth;
+        }
 
         //BitMatrix output = new BitMatrix(outputWidth, outputHeight);
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -162,19 +171,6 @@ public class Code128 {
                 //float left, float top, float right, float bottom
                 canvas.drawRect(outputX, TOP_GAP, (outputX + multiple), outputHeight, barPaint);
             }
-        }
-
-
-        if (hasText) {
-            Resources resources = context.getResources();
-            float scale = resources.getDisplayMetrics().density;
-
-            bgPaint.setColor(Color.BLACK);
-            int size = (int) (26 * scale);
-            bgPaint.setTextSize(size);
-            String str = insertSpace(data);
-            bgPaint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText(str, width / 2, (height - 10), bgPaint);
         }
 
         return bitmap;

@@ -99,14 +99,10 @@ public class EAN13 {
 		if(code == null) {
 			return null;
 		}
-		int inputWidth = code.length;
-		// Add quiet zone on both sides
-		int fullWidth = inputWidth + 6; // for empty(quiet) space
-		int outputWidth = Math.max(width, fullWidth);
-		int outputHeight = Math.max(1, height);
-
-		int multiple = outputWidth / fullWidth;
-		int leftPadding = (outputWidth - (inputWidth * multiple)) / 2;
+		// todo: fix removing right padding when quiet zone is disabled
+		float inputWidth = code.length;
+		float outputHeight = Math.max(1, height);
+		float multiple = width / inputWidth;
 
 		//BitMatrix output = new BitMatrix(outputWidth, outputHeight);
 		Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -123,7 +119,7 @@ public class EAN13 {
 		barPaint.setColor(Color.rgb(0, 0, 0));
 		barPaint.setStrokeWidth(0);
 
-		for (int inputX = 0, outputX = leftPadding; inputX < inputWidth; inputX++, outputX += multiple) {
+		for (int inputX = 0, outputX = 0; inputX < inputWidth; inputX++, outputX += multiple) {
 			if (code[inputX] == 1) {
 				//output.setRegion(outputX, 0, multiple, outputHeight);
 				android.util.Log.e(TAG, "outputX: " + outputX + ", ouputY: 0, multiple: " + multiple + ", outputHeight: " + outputHeight);
