@@ -1,6 +1,5 @@
 package com.coolbong.barcodegenerator.model;
 
-
 public class Code128Constant {
 	public static final byte[][] CODE_WEIGHT = {
 	      {2, 1, 2, 2, 2, 2}, // 0

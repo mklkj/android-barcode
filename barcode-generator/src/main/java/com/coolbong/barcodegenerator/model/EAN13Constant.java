@@ -1,6 +1,5 @@
 package com.coolbong.barcodegenerator.model;
 
-
 public class EAN13Constant {
 
 	public static final byte L_CODE = 0;

@@ -1,6 +1,5 @@
 package com.coolbong.barcodegenerator.model;
 
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -54,11 +53,11 @@ public class EAN13 {
 
 	public byte[] encode() {
 
-		if(isVaildBarcodeData() == false) {
+		if(!isVaildBarcodeData()) {
 			android.util.Log.e(TAG, "invalid data length!!");
 			return null;
 		}
-		
+
 		int len = data.length();
 		int pos = 0;
 
@@ -67,13 +66,13 @@ public class EAN13 {
 
 		int first_num = Integer.parseInt(data.substring(0, 1));
 		byte[] patterns = EAN13Constant.FIRST_DIGIT[first_num];
-		
+
 		pos += appendData(EAN13Constant.START_PATTERN, buffer, pos, "START CODE");
 		for(int i=1; i<len; i++) {
 			int num = Integer.parseInt(data.substring(i, i+1));
-			
+
 			byte code = patterns[(i-1)];
-			
+
 			if(code == EAN13Constant.L_CODE) {
 				pos += appendData(EAN13Constant.L_CODE_PATTERN[num], buffer, pos, "L code based number");
 			} else if(code ==EAN13Constant.G_CODE) {
@@ -81,12 +80,12 @@ public class EAN13 {
 			} else { // R-code
 				pos += appendData(EAN13Constant.R_CODE_PATTERN[num], buffer, pos, "R code based number");
 			}
-			
+
 			if(i == 6) {
 				pos += appendData(EAN13Constant.MIDDLE_PATTERN, buffer, pos, "MIDDLE CODE");
 			}
 		}
-		
+
 		pos += appendData(EAN13Constant.END_PATTERN, buffer, pos, "END CODE");
 
 		return buffer;
@@ -96,7 +95,7 @@ public class EAN13 {
 
 	public Bitmap getBitmap( int width, int height) {
 		byte[] code = encode();
-		
+
 		if(code == null) {
 			return null;
 		}
@@ -145,16 +144,12 @@ public class EAN13 {
 		if(data == null) {
 			return false;
 		}
-		
+
 		if(data.length() != 13) {
 			return false;
 		}
-		
-		if(checkNumber(data) == false) {
-			return false;
-		}
-		
-		return true;
+
+		return checkNumber(data);
 	}
 
 
@@ -192,7 +187,7 @@ public class EAN13 {
 		for(byte by: buff) {
 			sb.append(by);
 		}
-		android.util.Log.e(TAG, "char: " + msg + " barcode weight: " + sb.toString());
+		android.util.Log.e(TAG, "char: " + msg + " barcode weight: " + sb);
 	}
 
 }
