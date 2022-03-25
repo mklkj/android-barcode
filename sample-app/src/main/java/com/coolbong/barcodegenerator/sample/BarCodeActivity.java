@@ -22,10 +22,9 @@ public class BarCodeActivity extends Activity {
 
     private void drawCode128(ImageView ivBarcode) {
         String barcode = "7761010114033430";
-        Code128 code = new Code128(this);
-        code.setData(barcode);
+        Code128 code = new Code128(barcode);
         ivBarcode.post(() -> {
-            Bitmap bitmap = code.getBitmap(ivBarcode.getMeasuredWidth(), ivBarcode.getMeasuredHeight());
+            Bitmap bitmap = code.getBitmap(ivBarcode.getMeasuredWidth(), ivBarcode.getMeasuredHeight(), false);
             ivBarcode.setImageBitmap(bitmap);
         });
     }

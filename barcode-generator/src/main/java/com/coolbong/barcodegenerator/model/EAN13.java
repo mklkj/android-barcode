@@ -110,7 +110,7 @@ public class EAN13 {
 		// new antialised Paint
 		Paint bgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		// text color - #3D3D3D
-		bgPaint.setColor(Color.rgb(255, 255, 255));
+		bgPaint.setColor(Color.TRANSPARENT);
 
 		Rect bounds = new Rect(0, 0, width, height);
 		canvas.drawRect(bounds, bgPaint);
